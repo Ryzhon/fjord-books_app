@@ -22,3 +22,38 @@
 
 <%= link_to t('views.common.edit'), edit_book_path(@book) %> |
 <%= link_to t('views.common.back'), books_path %>
+
+<hr>
+
+<h2><%= t('activerecord.models.comment') %></h2>
+
+<%= form_with(model: [ @book, Comment.new ], local: true) do |form| %>
+  <p>
+    <%= form.label :title, t('activerecord.attributes.comment.title') %><br>
+    <%= form.text_field :title %>
+  </p>
+  <p>
+    <%= form.label :content, t('activerecord.attributes.comment.content') %><br>
+    <%= form.text_area :content %>
+  </p>
+  <p>
+    <%= form.submit t('comments.submit') %>
+  </p>
+<% end %>
+
+<h3><%= t('comments.list') %></h3>
+<% @book.comments.order(created_at: :desc).each do |comment| %>
+  <div>
+    <strong><%= comment.user.name %>:</strong>
+      <%= comment.title %><br>
+      <strong><%= t('activerecord.attributes.comment.content') %>:</strong>
+       <%= comment.content %><br>
+    <small><%= l(comment.created_at, format: :short) %></small>
+  </div>
+  <% if comment.user == current_user %>
+    <%= link_to t('views.common.destroy'), [ @book, comment ],
+                method: :delete,
+                data: { confirm: t('views.common.delete_confirm') } %>
+  <% end %>
+  <hr>
+<% end %>

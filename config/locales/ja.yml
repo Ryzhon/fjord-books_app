@@ -255,3 +255,33 @@ ja:
     registrations:
       edit:
         title: "アカウント編集"
+  activerecord:
+    models:
+      comment: "コメント"
+      report: "日報"
+    attributes:
+      comment:
+        title: "タイトル"
+        content: "本文"
+      report:
+        title: "タイトル"
+        content: "本文"
+        created_at: "投稿日"
+  comments:
+    title: "コメント"
+    content: "本文"
+    author: "投稿者"
+    list: "コメント一覧"
+    submit: "コメントを投稿する"
+    successfully_created: "コメントが作成されました。"
+    successfully_destroyed: "コメントが削除されました。"
+    unable_to_create: "コメントを作成できませんでした。"
+    not_authorized: "このコメントを削除する権限がありません。"
+  reports:
+    title: "日報"
+    new: "日報を新規作成"
+    edit: "日報を編集"
+    delete_confirm: "この日報を削除してもよろしいですか？"
+    successfully_created: "日報が作成されました。"
+    successfully_updated: "日報が更新されました。"
+    successfully_destroyed: "日報が削除されました。"
