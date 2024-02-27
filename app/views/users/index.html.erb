@@ -19,7 +19,7 @@
         <td><%= user.name %></td>
         <td><%= user.postal_code %></td>
         <td><%= user.address %></td>
-        <td><%= image_tag(user.user_icon, :size =>'50x50') if user.user_icon.attached? %></td>
+        <td><%= image_tag(user.user_icon.variant(resize_to_fit: [50, 50])) if user.user_icon.attached? %></td>
         <td><%= link_to t('views.common.show'), user %></td>
       </tr>
     <% end %>
