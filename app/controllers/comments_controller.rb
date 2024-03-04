@@ -18,6 +18,6 @@ class CommentsController < ApplicationController
   end
 
   def correct_user
-    redirect_to root_url, alert: 'Not authorized to delete this comment.' unless current_user == @comment.user
+    redirect_to root_path, alert: t('comments.not_authorized') unless current_user == @comment.user
   end
 end

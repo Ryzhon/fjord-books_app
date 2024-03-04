@@ -6,7 +6,7 @@ class ReportsController < ApplicationController
   before_action :set_report, only: %i[show edit update destroy create_comment]
 
   def index
-    @reports = Report.all
+    @reports = Report.order(created_at: :desc).page(params[:page]).per(3)
   end
 
   def show; end
@@ -20,7 +20,7 @@ class ReportsController < ApplicationController
   def create
     @report = current_user.reports.new(report_params)
     if @report.save
-      redirect_to report_url(@report), notice: t('reports.successfully_created')
+      redirect_to report_path(@report), notice: t('reports.successfully_created')
     else
       render :new, status: :unprocessable_entity
     end
@@ -28,7 +28,7 @@ class ReportsController < ApplicationController
 
   def update
     if @report.update(report_params)
-      redirect_to report_url(@report), notice: t('reports.successfully_updated')
+      redirect_to report_path(@report), notice: t('reports.successfully_updated')
     else
       render :edit, status: :unprocessable_entity
     end
@@ -36,7 +36,7 @@ class ReportsController < ApplicationController
 
   def destroy
     @report.destroy
-    redirect_to reports_url, notice: t('reports.successfully_destroyed')
+    redirect_to reports_path, notice: t('reports.successfully_destroyed')
   end
 
   def create_comment
@@ -52,8 +52,8 @@ class ReportsController < ApplicationController
   private
 
   def correct_user
-    @report = current_user.reports.find_by(id: params[:id])
-    redirect_to root_url if @report.nil?
+    @report = current_user.reports.find(params[:id])
+    redirect_to root_path if @report.nil?
   end
 
   def set_report

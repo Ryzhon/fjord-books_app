@@ -56,7 +56,7 @@ class BooksController < ApplicationController
   def destroy
     @book.destroy
     respond_to do |format|
-      format.html { redirect_to books_url, notice: t('controllers.common.notice_destroy', name: Book.model_name.human) }
+      format.html { redirect_to books_path, notice: t('controllers.common.notice_destroy', name: Book.model_name.human) }
       format.json { head :no_content }
     end
   end
@@ -67,7 +67,8 @@ class BooksController < ApplicationController
     if @comment.save
       redirect_to @book, notice: t('comments.successfully_created')
     else
-      redirect_to @book, alert: t('comments.unable_to_create')
+      flash.now[:alert] = t('comments.unable_to_create')
+      render 'books/show'
     end
   end
 
