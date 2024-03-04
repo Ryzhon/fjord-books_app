@@ -1,16 +1,14 @@
 Rails.application.routes.draw do
-  get 'comments/create'
-  get 'comments/destroy'
-  resources :reports
   mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?
   devise_for :users
   root to: 'books#index'
   resources :books do
     resources :comments, only: [:create, :destroy]
+    post 'create_comment', on: :member
   end
-
   resources :reports do
     resources :comments, only: [:create, :destroy]
+    post 'create_comment', on: :member
   end
   resources :users, only: %i[index show] do
     resource :relationships, only: %i[create destroy]

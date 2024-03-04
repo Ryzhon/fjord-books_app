@@ -19,7 +19,7 @@
 
 <h2><%= t('comments.title') %></h2>
 
-<%= form_with(model: [ @report, Comment.new ], local: true) do |form| %>
+<%= form_with(model: [ @report, Comment.new ], url: create_comment_report_path(@report), local: true) do |form| %>
   <p>
     <%= form.label :title, t('activerecord.attributes.comment.title') %><br>
     <%= form.text_field :title %>

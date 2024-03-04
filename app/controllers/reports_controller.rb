@@ -3,7 +3,7 @@
 class ReportsController < ApplicationController
   before_action :authenticate_user!, only: %i[edit update destroy]
   before_action :correct_user, only: %i[edit update destroy]
-  before_action :set_report, only: %i[show edit update destroy]
+  before_action :set_report, only: %i[show edit update destroy create_comment]
 
   def index
     @reports = Report.all
@@ -39,6 +39,16 @@ class ReportsController < ApplicationController
     redirect_to reports_url, notice: t('reports.successfully_destroyed')
   end
 
+  def create_comment
+    @comment = @report.comments.new(comment_params.merge(user: current_user))
+
+    if @comment.save
+      redirect_to @report, notice: t('comments.successfully_created')
+    else
+      redirect_to @report, alert: t('comments.unable_to_create')
+    end
+  end
+
   private
 
   def correct_user
@@ -52,5 +62,9 @@ class ReportsController < ApplicationController
 
   def report_params
     params.require(:report).permit(:title, :content)
+  end
+
+  def comment_params
+    params.require(:comment).permit(:title, :content)
   end
 end

@@ -27,7 +27,7 @@
 
 <h2><%= t('activerecord.models.comment') %></h2>
 
-<%= form_with(model: [ @book, Comment.new ], local: true) do |form| %>
+<%= form_with(model: [ @book, Comment.new ], url: create_comment_book_path(@book), local: true) do |form| %>
   <p>
     <%= form.label :title, t('activerecord.attributes.comment.title') %><br>
     <%= form.text_field :title %>

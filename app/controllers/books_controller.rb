@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class BooksController < ApplicationController
-  before_action :set_book, only: %i[show edit update destroy]
+  before_action :set_book, only: %i[show edit update destroy create_comment]
 
   # GET /books
   # GET /books.json
@@ -61,6 +61,16 @@ class BooksController < ApplicationController
     end
   end
 
+  def create_comment
+    @comment = @book.comments.new(comment_params.merge(user: current_user))
+
+    if @comment.save
+      redirect_to @book, notice: t('comments.successfully_created')
+    else
+      redirect_to @book, alert: t('comments.unable_to_create')
+    end
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -71,5 +81,9 @@ class BooksController < ApplicationController
   # Only allow a list of trusted parameters through.
   def book_params
     params.require(:book).permit(:title, :memo, :author, :picture)
+  end
+
+  def comment_params
+    params.require(:comment).permit(:title, :content)
   end
 end
