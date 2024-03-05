@@ -27,7 +27,7 @@
 
 <h2><%= t('activerecord.models.comment') %></h2>
 
-<%= render 'comments/form', commentable: @book, form_url: create_comment_book_path(@book) %>
+<%= render 'comments/form', commentable: @book, form_url: book_comments_path(@book) %>
 
 <h3><%= t('comments.list') %></h3>
 <%= render partial: 'comments/comment', collection: @book.comments.order(created_at: :desc), as: :comment, locals: { commentable: @book } %>

@@ -19,7 +19,7 @@
 
 <h2><%= t('comments.title') %></h2>
 
-<%= render 'comments/form', commentable: @report, form_url: create_comment_report_path(@report) %>
+<%= render 'comments/form', commentable: @report, form_url: report_comments_path(@report) %>
 
 <h3><%= t('comments.list') %></h3>
 <%= render partial: 'comments/comment', collection: @report.comments.order(created_at: :desc), as: :comment, locals: { commentable: @report } %>
