@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
 class ReportsController < ApplicationController
-  before_action :authenticate_user!, only: %i[edit update destroy]
   before_action :correct_user, only: %i[edit update destroy]
-  before_action :set_report, only: %i[show edit update destroy]
+  before_action :set_report, only: %i[show]
 
   def index
     @reports = Report.order(created_at: :desc).page(params[:page]).per(3)
@@ -43,7 +42,6 @@ class ReportsController < ApplicationController
 
   def correct_user
     @report = current_user.reports.find(params[:id])
-    redirect_to root_path if @report.nil?
   end
 
   def set_report
