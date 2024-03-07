@@ -56,7 +56,7 @@ class BooksController < ApplicationController
   def destroy
     @book.destroy
     respond_to do |format|
-      format.html { redirect_to books_url, notice: t('controllers.common.notice_destroy', name: Book.model_name.human) }
+      format.html { redirect_to books_path, notice: t('controllers.common.notice_destroy', name: Book.model_name.human) }
       format.json { head :no_content }
     end
   end

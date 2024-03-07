@@ -1,0 +1,25 @@
+<p id="notice"></p>
+
+<h1><%= t('reports.title') %></h1>
+
+<p>
+  <strong><%= Report.human_attribute_name(:title) %>:</strong>
+  <%= @report.title %>
+</p>
+
+<p>
+  <strong><%= Report.human_attribute_name(:content) %>:</strong>
+  <%= @report.content %>
+</p>
+
+<%= link_to t('views.common.edit'), edit_report_path(@report) %> |
+<%= link_to t('views.common.back'), reports_path %>
+
+<hr>
+
+<h2><%= t('comments.title') %></h2>
+
+<%= render 'comments/form', commentable: @report, form_url: report_comments_path(@report) %>
+
+<h3><%= t('comments.list') %></h3>
+<%= render partial: 'comments/comment', collection: @report.comments.order(created_at: :desc), as: :comment, locals: { commentable: @report } %>

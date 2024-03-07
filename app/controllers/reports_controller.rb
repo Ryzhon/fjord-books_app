@@ -1,0 +1,54 @@
+# frozen_string_literal: true
+
+class ReportsController < ApplicationController
+  before_action :correct_user, only: %i[edit update destroy]
+  before_action :set_report, only: %i[show]
+
+  def index
+    @reports = Report.order(created_at: :desc).page(params[:page]).per(3)
+  end
+
+  def show; end
+
+  def new
+    @report = Report.new
+  end
+
+  def edit; end
+
+  def create
+    @report = current_user.reports.new(report_params)
+    if @report.save
+      redirect_to report_path(@report), notice: t('reports.successfully_created')
+    else
+      render :new, status: :unprocessable_entity
+    end
+  end
+
+  def update
+    if @report.update(report_params)
+      redirect_to report_path(@report), notice: t('reports.successfully_updated')
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    @report.destroy
+    redirect_to reports_path, notice: t('reports.successfully_destroyed')
+  end
+
+  private
+
+  def correct_user
+    @report = current_user.reports.find(params[:id])
+  end
+
+  def set_report
+    @report = Report.find(params[:id])
+  end
+
+  def report_params
+    params.require(:report).permit(:title, :content)
+  end
+end

@@ -58,7 +58,7 @@ User.transaction do
     User.create!(
       email: "sample-#{n}@example.com",
       password: 'password',
-      name: name,
+      name:,
       postal_code: "123-#{n.to_s.rjust(4, '0')}",
       address: Faker::Address.full_address,
       self_introduction: "こんにちは、#{name}です。"
@@ -80,7 +80,7 @@ Relationship.destroy_all
 
 # 後輩が先輩を全員フォローする
 User.order(id: :desc).each do |user|
-  User.where('id < ?', user.id).each do |other|
+  User.where('id < ?', user.id).find_each do |other|
     user.follow(other)
   end
 end

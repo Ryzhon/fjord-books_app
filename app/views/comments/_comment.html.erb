@@ -1,0 +1,13 @@
+<div>
+  <strong><%= comment.user.name %>:</strong>
+    <%= comment.title %><br>
+    <strong><%= t('activerecord.attributes.comment.content') %>:</strong>
+     <%= comment.content %><br>
+  <small><%= l(comment.created_at, format: :short) %></small>
+</div>
+<% if comment.user == current_user %>
+  <%= link_to t('views.common.destroy'), [ commentable, comment ],
+              method: :delete,
+              data: { confirm: t('views.common.delete_confirm') } %>
+<% end %>
+<hr>

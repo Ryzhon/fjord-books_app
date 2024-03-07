@@ -22,3 +22,12 @@
 
 <%= link_to t('views.common.edit'), edit_book_path(@book) %> |
 <%= link_to t('views.common.back'), books_path %>
+
+<hr>
+
+<h2><%= t('activerecord.models.comment') %></h2>
+
+<%= render 'comments/form', commentable: @book, form_url: book_comments_path(@book) %>
+
+<h3><%= t('comments.list') %></h3>
+<%= render partial: 'comments/comment', collection: @book.comments.order(created_at: :desc), as: :comment, locals: { commentable: @book } %>

@@ -1,0 +1,13 @@
+<%= form_with(model: [ commentable, Comment.new ], url: form_url, local: true) do |form| %>
+  <p>
+    <%= form.label :title, t('activerecord.attributes.comment.title') %><br>
+    <%= form.text_field :title %>
+  </p>
+  <p>
+    <%= form.label :content, t('activerecord.attributes.comment.content') %><br>
+    <%= form.text_area :content %>
+  </p>
+  <p>
+    <%= form.submit t('comments.submit') %>
+  </p>
+<% end %>
