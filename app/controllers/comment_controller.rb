@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CommentableController < ApplicationController
+class CommentController < ApplicationController
   before_action :set_commentable
   before_action :set_comment, only: [:destroy]
   before_action :correct_user, only: [:destroy]
@@ -12,7 +12,7 @@ class CommentableController < ApplicationController
     if @comment.save
       redirect_to @commentable, notice: t('comments.successfully_created')
     else
-      render render_template_for(@commentable), status: :unprocessable_entity
+      render render_template_for, status: :unprocessable_entity
     end
   end
 
@@ -24,7 +24,7 @@ class CommentableController < ApplicationController
   private
 
   def set_comment
-    @comment = Comment.find(params[:id])
+    @comment = @commentable.comments.find(params[:id])
   end
 
   def correct_user
@@ -33,10 +33,5 @@ class CommentableController < ApplicationController
 
   def comment_params
     params.require(:comment).permit(:title, :content)
-  end
-
-  def render_template_for(commentable)
-    model_name = commentable.model_name.plural
-    "#{model_name}/show"
   end
 end
